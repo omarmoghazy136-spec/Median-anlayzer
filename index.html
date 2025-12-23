@@ -3,30 +3,937 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Median Analyzer</title>
-    <link rel="stylesheet" href="style.css">
+    <title>Median Analyzer - Statistics Calculator</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap">
+    <style>
+        :root {
+            --primary-color: #4a6fa5;
+            --secondary-color: #166088;
+            --dark-bg: #121826;
+            --darker-bg: #0d1117;
+            --card-bg: #1a1f29;
+            --text-color: #e2e8f0;
+            --text-secondary: #94a3b8;
+            --accent-color: #38bdf8;
+            --border-color: #2d3748;
+            --success-color: #10b981;
+            --warning-color: #f59e0b;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            background-color: var(--dark-bg);
+            color: var(--text-color);
+            line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header & Navigation */
+        header {
+            background-color: var(--darker-bg);
+            padding: 1rem 0;
+            border-bottom: 1px solid var(--border-color);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo i {
+            color: var(--accent-color);
+            font-size: 1.8rem;
+        }
+
+        .logo h1 {
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+
+        .logo span {
+            color: var(--accent-color);
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        nav a {
+            color: var(--text-color);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: color 0.3s;
+            position: relative;
+            padding: 5px 0;
+        }
+
+        nav a:hover, nav a.active {
+            color: var(--accent-color);
+        }
+
+        nav a.active::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background-color: var(--accent-color);
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--text-color);
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        /* Main Content */
+        main {
+            padding: 3rem 0;
+            flex: 1;
+        }
+
+        .page {
+            display: none;
+        }
+
+        .page.active {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        /* Home Page */
+        .calculator-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .calculator-header h2 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            color: var(--accent-color);
+        }
+
+        .calculator-header p {
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .calculator-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        @media (max-width: 768px) {
+            .calculator-container {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .calculator-card, .results-card {
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+            border: 1px solid var(--border-color);
+        }
+
+        .calculator-card h3, .results-card h3 {
+            color: var(--accent-color);
+            margin-bottom: 1.5rem;
+            font-size: 1.8rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .calculator-card h3 i, .results-card h3 i {
+            font-size: 1.5rem;
+        }
+
+        .input-group {
+            margin-bottom: 1.5rem;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: var(--text-secondary);
+        }
+
+        .input-with-icon {
+            position: relative;
+        }
+
+        .input-with-icon i {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-secondary);
+        }
+
+        input, textarea {
+            width: 100%;
+            padding: 12px 15px 12px 45px;
+            background-color: var(--darker-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            color: var(--text-color);
+            font-size: 1rem;
+            transition: border-color 0.3s;
+        }
+
+        input:focus, textarea:focus {
+            outline: none;
+            border-color: var(--accent-color);
+        }
+
+        textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        .input-hint {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            margin-top: 5px;
+            display: block;
+        }
+
+        .btn {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn:hover {
+            background-color: var(--secondary-color);
+        }
+
+        .btn i {
+            font-size: 1rem;
+        }
+
+        .btn-calculate {
+            width: 100%;
+            justify-content: center;
+            margin-top: 0.5rem;
+        }
+
+        .results-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        @media (max-width: 480px) {
+            .results-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .result-box {
+            background-color: var(--darker-bg);
+            padding: 1.5rem;
+            border-radius: 8px;
+            border-left: 4px solid var(--accent-color);
+        }
+
+        .result-title {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            margin-bottom: 5px;
+        }
+
+        .result-value {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--accent-color);
+        }
+
+        .sorted-numbers {
+            margin-top: 1.5rem;
+            padding: 1rem;
+            background-color: var(--darker-bg);
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+        }
+
+        .sorted-numbers p {
+            color: var(--text-secondary);
+            margin-bottom: 5px;
+        }
+
+        .numbers-list {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--success-color);
+            word-break: break-all;
+        }
+
+        /* About Page */
+        .about-content {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .page-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .page-header h2 {
+            font-size: 2.5rem;
+            color: var(--accent-color);
+            margin-bottom: 1rem;
+        }
+
+        .page-header p {
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .about-card {
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            padding: 2.5rem;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+            border: 1px solid var(--border-color);
+            margin-bottom: 2rem;
+        }
+
+        .about-card h3 {
+            color: var(--accent-color);
+            margin-bottom: 1.5rem;
+            font-size: 1.8rem;
+        }
+
+        .about-card p {
+            margin-bottom: 1.5rem;
+            font-size: 1.1rem;
+            line-height: 1.8;
+        }
+
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .feature {
+            background-color: var(--darker-bg);
+            padding: 1.5rem;
+            border-radius: 8px;
+            text-align: center;
+            border-top: 4px solid var(--primary-color);
+        }
+
+        .feature i {
+            font-size: 2.5rem;
+            color: var(--accent-color);
+            margin-bottom: 1rem;
+        }
+
+        .feature h4 {
+            margin-bottom: 0.8rem;
+            color: var(--text-color);
+            font-size: 1.3rem;
+        }
+
+        /* Contact Page */
+        .contact-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+        }
+
+        @media (max-width: 768px) {
+            .contact-container {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .contact-info {
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+            border: 1px solid var(--border-color);
+        }
+
+        .contact-info h3 {
+            color: var(--accent-color);
+            margin-bottom: 1.5rem;
+            font-size: 1.8rem;
+        }
+
+        .contact-details {
+            margin-top: 2rem;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 1.5rem;
+        }
+
+        .contact-item i {
+            font-size: 1.5rem;
+            color: var(--accent-color);
+            width: 40px;
+            height: 40px;
+            background-color: rgba(56, 189, 248, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .contact-item h4 {
+            margin-bottom: 5px;
+            color: var(--text-color);
+        }
+
+        .contact-item p {
+            color: var(--text-secondary);
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--darker-bg);
+            padding: 1.5rem 0;
+            border-top: 1px solid var(--border-color);
+            margin-top: auto;
+        }
+
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        @media (max-width: 768px) {
+            .footer-content {
+                flex-direction: column;
+                gap: 1rem;
+                text-align: center;
+            }
+        }
+
+        .copyright {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 1.5rem;
+        }
+
+        .footer-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-links a:hover {
+            color: var(--accent-color);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            nav ul {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background-color: var(--darker-bg);
+                flex-direction: column;
+                padding: 1rem 0;
+                border-top: 1px solid var(--border-color);
+                box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+            }
+
+            nav ul.active {
+                display: flex;
+            }
+
+            nav ul li {
+                text-align: center;
+                padding: 0.5rem 0;
+            }
+
+            .mobile-menu-btn {
+                display: block;
+            }
+
+            .calculator-header h2 {
+                font-size: 2rem;
+            }
+
+            .page-header h2 {
+                font-size: 2rem;
+            }
+        }
+
+        /* Windows Activation Notice */
+        .windows-notice {
+            background-color: var(--darker-bg);
+            padding: 10px 20px;
+            border-top: 1px solid var(--border-color);
+            text-align: center;
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            z-index: 99;
+        }
+
+        .windows-notice a {
+            color: var(--accent-color);
+            text-decoration: none;
+        }
+    </style>
 </head>
 <body>
-
+    <!-- Header -->
     <header>
-        <button id="themeToggle">Dark Mode</button>
-        <h1>Median Analyzer</h1>
-        <p>A simple statistics calculator to find the median of a set of numbers.</p>
+        <div class="container header-container">
+            <div class="logo">
+                <i class="fas fa-chart-line"></i>
+                <h1>Median <span>Analyzer</span></h1>
+            </div>
+            
+            <button class="mobile-menu-btn" id="mobileMenuBtn">
+                <i class="fas fa-bars"></i>
+            </button>
+            
+            <nav>
+                <ul id="navMenu">
+                    <li><a href="#" class="nav-link active" data-page="home">Home</a></li>
+                    <li><a href="#" class="nav-link" data-page="about">About</a></li>
+                    <li><a href="#" class="nav-link" data-page="contact">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
     </header>
 
-    <div class="container">
-        <h2>Statistics calculator</h2>
+    <!-- Main Content -->
+    <main>
+        <div class="container">
+            <!-- Home Page -->
+            <div id="home-page" class="page active">
+                <div class="calculator-header">
+                    <h2>Median Analyzer</h2>
+                    <p>A simple statistics calculator to find the median of a set of numbers.</p>
+                </div>
+                
+                <div class="calculator-container">
+                    <div class="calculator-card">
+                        <h3><i class="fas fa-calculator"></i> Statistics Calculator</h3>
+                        
+                        <div class="input-group">
+                            <label for="numbers-input">Enter numbers (comma separated)</label>
+                            <div class="input-with-icon">
+                                <i class="fas fa-list-ol"></i>
+                                <input type="text" id="numbers-input" placeholder="3,3,24,5645,24,234" value="3,3,24,5645,24,234">
+                            </div>
+                            <span class="input-hint">Example: 5, 10, 15, 20 or 5 10 15 20</span>
+                        </div>
+                        
+                        <button class="btn btn-calculate" id="calculate-btn">
+                            <i class="fas fa-calculator"></i> Calculate
+                        </button>
+                    </div>
+                    
+                    <div class="results-card">
+                        <h3><i class="fas fa-chart-bar"></i> Results</h3>
+                        
+                        <div class="results-grid">
+                            <div class="result-box">
+                                <div class="result-title">Mean</div>
+                                <div class="result-value" id="mean-result">0.00</div>
+                            </div>
+                            <div class="result-box">
+                                <div class="result-title">Median (Q2)</div>
+                                <div class="result-value" id="median-result">0</div>
+                            </div>
+                            <div class="result-box">
+                                <div class="result-title">Q1</div>
+                                <div class="result-value" id="q1-result">0</div>
+                            </div>
+                            <div class="result-box">
+                                <div class="result-title">Q3</div>
+                                <div class="result-value" id="q3-result">0</div>
+                            </div>
+                        </div>
+                        
+                        <div class="sorted-numbers">
+                            <p>Sorted Numbers:</p>
+                            <div class="numbers-list" id="sorted-numbers">No data yet</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- About Page -->
+            <div id="about-page" class="page">
+                <div class="page-header">
+                    <h2>About Median Analyzer</h2>
+                    <p>Learn more about our statistics calculator and its features</p>
+                </div>
+                
+                <div class="about-content">
+                    <div class="about-card">
+                        <h3>What is Median Analyzer?</h3>
+                        <p>Median Analyzer is a powerful yet simple-to-use statistics calculator designed to help students, researchers, and professionals quickly calculate key statistical measures from any dataset.</p>
+                        
+                        <p>Our tool focuses on providing accurate calculations for median, quartiles, mean, and other essential statistics with an intuitive interface and instant results.</p>
+                        
+                        <div class="features">
+                            <div class="feature">
+                                <i class="fas fa-bolt"></i>
+                                <h4>Fast Calculations</h4>
+                                <p>Get instant results for any dataset with our optimized algorithms.</p>
+                            </div>
+                            <div class="feature">
+                                <i class="fas fa-check-circle"></i>
+                                <h4>Accurate Results</h4>
+                                <p>Precise calculations following statistical best practices and formulas.</p>
+                            </div>
+                            <div class="feature">
+                                <i class="fas fa-laptop"></i>
+                                <h4>Responsive Design</h4>
+                                <p>Use our tool on any device - desktop, tablet, or mobile.</p>
+                            </div>
+                            <div class="feature">
+                                <i class="fas fa-chart-pie"></i>
+                                <h4>Multiple Statistics</h4>
+                                <p>Calculate mean, median, quartiles, and more from a single input.</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="about-card">
+                        <h3>How to Use</h3>
+                        <p>Using Median Analyzer is straightforward:</p>
+                        <ol style="margin-left: 1.5rem; margin-top: 1rem;">
+                            <li style="margin-bottom: 0.8rem;">Enter your numbers in the input field on the Home page</li>
+                            <li style="margin-bottom: 0.8rem;">Separate numbers with commas, spaces, or new lines</li>
+                            <li style="margin-bottom: 0.8rem;">Click the "Calculate" button to see your results</li>
+                            <li>View the calculated statistics and sorted numbers</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Contact Page -->
+            <div id="contact-page" class="page">
+                <div class="page-header">
+                    <h2>Contact Us</h2>
+                    <p>Get in touch with us for questions, feedback, or support</p>
+                </div>
+                
+                <div class="contact-container">
+                    <div class="contact-info">
+                        <h3><i class="fas fa-envelope"></i> Contact Information</h3>
+                        <p>Have questions about Median Analyzer or need statistical consulting? Reach out to us using the information below.</p>
+                        
+                        <div class="contact-details">
+                            <div class="contact-item">
+                                <i class="fas fa-envelope"></i>
+                                <div>
+                                    <h4>Email</h4>
+                                    <p>support@mediananalyzer.com</p>
+                                </div>
+                            </div>
+                            <div class="contact-item">
+                                <i class="fas fa-phone"></i>
+                                <div>
+                                    <h4>Phone</h4>
+                                    <p>+1 (555) 123-4567</p>
+                                </div>
+                            </div>
+                            <div class="contact-item">
+                                <i class="fas fa-map-marker-alt"></i>
+                                <div>
+                                    <h4>Address</h4>
+                                    <p>123 Statistics Street, Data City, DC 10001</p>
+                                </div>
+                            </div>
+                            <div class="contact-item">
+                                <i class="fas fa-clock"></i>
+                                <div>
+                                    <h4>Business Hours</h4>
+                                    <p>Monday - Friday: 9AM - 6PM EST</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="calculator-card">
+                        <h3><i class="fas fa-paper-plane"></i> Send a Message</h3>
+                        
+                        <form id="contact-form">
+                            <div class="input-group">
+                                <label for="contact-name">Your Name</label>
+                                <div class="input-with-icon">
+                                    <i class="fas fa-user"></i>
+                                    <input type="text" id="contact-name" placeholder="John Smith" required>
+                                </div>
+                            </div>
+                            
+                            <div class="input-group">
+                                <label for="contact-email">Your Email</label>
+                                <div class="input-with-icon">
+                                    <i class="fas fa-envelope"></i>
+                                    <input type="email" id="contact-email" placeholder="john@example.com" required>
+                                </div>
+                            </div>
+                            
+                            <div class="input-group">
+                                <label for="contact-message">Your Message</label>
+                                <div class="input-with-icon">
+                                    <i class="fas fa-comment"></i>
+                                    <textarea id="contact-message" placeholder="Type your message here..." required></textarea>
+                                </div>
+                            </div>
+                            
+                            <button type="submit" class="btn btn-calculate">
+                                <i class="fas fa-paper-plane"></i> Send Message
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
 
-        <input type="text" id="numbers" placeholder="Enter numbers separated by commas (e.g., 1, 5, 3, 7)">
-        <button onclick="calculateStats()">Calculate</button>
-
-        <div id="result"></div>
-    </div>
-
+    <!-- Footer -->
     <footer>
-        <p>© 2025 Median Analyzer</p>
+        <div class="container footer-content">
+            <div class="copyright">
+                &copy; 2023 Median Analyzer. All rights reserved.
+            </div>
+            <div class="footer-links">
+                <a href="#" class="nav-link" data-page="home">Home</a>
+                <a href="#" class="nav-link" data-page="about">About</a>
+                <a href="#" class="nav-link" data-page="contact">Contact</a>
+                <a href="#">Privacy Policy</a>
+            </div>
+        </div>
     </footer>
 
-    <script src="script.js"></script>
+    <!-- Windows Activation Notice -->
+    <div class="windows-notice">
+        <i class="fas fa-exclamation-circle"></i> Activate Windows. Go to Settings to activate Windows.
+    </div>
+
+    <script>
+        // Navigation between pages
+        document.addEventListener('DOMContentLoaded', function() {
+            const navLinks = document.querySelectorAll('.nav-link');
+            const pages = document.querySelectorAll('.page');
+            const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+            const navMenu = document.getElementById('navMenu');
+            
+            // Navigation click handler
+            navLinks.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    
+                    const pageId = this.getAttribute('data-page');
+                    
+                    // Update active nav link
+                    navLinks.forEach(link => link.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    // Show selected page
+                    pages.forEach(page => {
+                        page.classList.remove('active');
+                        if (page.id === `${pageId}-page`) {
+                            page.classList.add('active');
+                        }
+                    });
+                    
+                    // Close mobile menu if open
+                    navMenu.classList.remove('active');
+                });
+            });
+            
+            // Mobile menu toggle
+            mobileMenuBtn.addEventListener('click', function() {
+                navMenu.classList.toggle('active');
+            });
+            
+            // Close mobile menu when clicking outside
+            document.addEventListener('click', function(e) {
+                if (!navMenu.contains(e.target) && !mobileMenuBtn.contains(e.target)) {
+                    navMenu.classList.remove('active');
+                }
+            });
+            
+            // Calculator functionality
+            const calculateBtn = document.getElementById('calculate-btn');
+            const numbersInput = document.getElementById('numbers-input');
+            const meanResult = document.getElementById('mean-result');
+            const medianResult = document.getElementById('median-result');
+            const q1Result = document.getElementById('q1-result');
+            const q3Result = document.getElementById('q3-result');
+            const sortedNumbers = document.getElementById('sorted-numbers');
+            
+            calculateBtn.addEventListener('click', calculateStatistics);
+            
+            // Calculate statistics function
+            function calculateStatistics() {
+                let input = numbersInput.value.trim();
+                
+                // Replace multiple separators with commas
+                input = input.replace(/[,\s]+/g, ',');
+                
+                // Remove trailing commas
+                input = input.replace(/^,|,$/g, '');
+                
+                if (!input) {
+                    alert('Please enter some numbers');
+                    return;
+                }
+                
+                // Convert to array of numbers
+                const numbers = input.split(',').map(num => parseFloat(num.trim())).filter(num => !isNaN(num));
+                
+                if (numbers.length === 0) {
+                    alert('Please enter valid numbers');
+                    return;
+                }
+                
+                // Sort numbers
+                const sorted = [...numbers].sort((a, b) => a - b);
+                
+                // Calculate mean
+                const sum = sorted.reduce((a, b) => a + b, 0);
+                const mean = sum / sorted.length;
+                
+                // Calculate median (Q2)
+                let median;
+                const mid = Math.floor(sorted.length / 2);
+                
+                if (sorted.length % 2 === 0) {
+                    median = (sorted[mid - 1] + sorted[mid]) / 2;
+                } else {
+                    median = sorted[mid];
+                }
+                
+                // Calculate Q1 (median of first half)
+                const firstHalf = sorted.slice(0, mid);
+                let q1;
+                const q1Mid = Math.floor(firstHalf.length / 2);
+                
+                if (firstHalf.length % 2 === 0) {
+                    q1 = (firstHalf[q1Mid - 1] + firstHalf[q1Mid]) / 2;
+                } else {
+                    q1 = firstHalf[q1Mid];
+                }
+                
+                // Calculate Q3 (median of second half)
+                const secondHalfStart = sorted.length % 2 === 0 ? mid : mid + 1;
+                const secondHalf = sorted.slice(secondHalfStart);
+                let q3;
+                const q3Mid = Math.floor(secondHalf.length / 2);
+                
+                if (secondHalf.length % 2 === 0) {
+                    q3 = (secondHalf[q3Mid - 1] + secondHalf[q3Mid]) / 2;
+                } else {
+                    q3 = secondHalf[q3Mid];
+                }
+                
+                // Update UI with results
+                meanResult.textContent = mean.toFixed(2);
+                medianResult.textContent = median;
+                q1Result.textContent = q1;
+                q3Result.textContent = q3;
+                sortedNumbers.textContent = sorted.join(', ');
+            }
+            
+            // Contact form submission
+            const contactForm = document.getElementById('contact-form');
+            contactForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                const name = document.getElementById('contact-name').value;
+                const email = document.getElementById('contact-email').value;
+                const message = document.getElementById('contact-message').value;
+                
+                // In a real application, you would send this data to a server
+                // For this demo, we'll just show an alert
+                alert(`Thank you for your message, ${name}! We'll get back to you at ${email} soon.`);
+                
+                // Reset form
+                contactForm.reset();
+            });
+            
+            // Initialize with example data
+            calculateStatistics();
+        });
+    </script>
 </body>
 </html>
