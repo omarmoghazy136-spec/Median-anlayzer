@@ -1,6 +1,8 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" id="htmlElement">
 <head>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4099950142670044"
+     crossorigin="anonymous"></script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Median Analyzer - Statistics Calculator</title>
@@ -21,6 +23,20 @@
             --warning-color: #f59e0b;
         }
 
+        .light-mode {
+            --primary-color: #3b82f6;
+            --secondary-color: #1d4ed8;
+            --dark-bg: #f8fafc;
+            --darker-bg: #f1f5f9;
+            --card-bg: #ffffff;
+            --text-color: #1e293b;
+            --text-secondary: #64748b;
+            --accent-color: #3b82f6;
+            --border-color: #e2e8f0;
+            --success-color: #10b981;
+            --warning-color: #f59e0b;
+        }
+
         * {
             margin: 0;
             padding: 0;
@@ -35,6 +51,7 @@
             min-height: 100vh;
             display: flex;
             flex-direction: column;
+            transition: background-color 0.3s, color 0.3s;
         }
 
         .container {
@@ -51,6 +68,7 @@
             position: sticky;
             top: 0;
             z-index: 100;
+            transition: background-color 0.3s, border-color 0.3s;
         }
 
         .header-container {
@@ -77,6 +95,134 @@
 
         .logo span {
             color: var(--accent-color);
+        }
+
+        .header-controls {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .language-selector {
+            position: relative;
+        }
+
+        .language-btn {
+            background: none;
+            border: 1px solid var(--border-color);
+            color: var(--text-color);
+            padding: 8px 15px;
+            border-radius: 6px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: background-color 0.3s;
+        }
+
+        .language-btn:hover {
+            background-color: rgba(56, 189, 248, 0.1);
+        }
+
+        .language-dropdown {
+            position: absolute;
+            top: 100%;
+            right: 0;
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            display: none;
+            z-index: 10;
+            min-width: 150px;
+        }
+
+        .language-dropdown.show {
+            display: block;
+        }
+
+        .language-option {
+            padding: 10px 15px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: background-color 0.3s;
+        }
+
+        .language-option:hover {
+            background-color: rgba(56, 189, 248, 0.1);
+        }
+
+        .theme-toggle {
+            background: none;
+            border: 1px solid var(--border-color);
+            color: var(--text-color);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background-color 0.3s;
+        }
+
+        .theme-toggle:hover {
+            background-color: rgba(56, 189, 248, 0.1);
+        }
+
+        .user-menu {
+            position: relative;
+        }
+
+        .user-btn {
+            background: none;
+            border: 1px solid var(--border-color);
+            color: var(--text-color);
+            padding: 8px 15px;
+            border-radius: 6px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: background-color 0.3s;
+        }
+
+        .user-btn:hover {
+            background-color: rgba(56, 189, 248, 0.1);
+        }
+
+        .user-dropdown {
+            position: absolute;
+            top: 100%;
+            right: 0;
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            display: none;
+            z-index: 10;
+            min-width: 180px;
+        }
+
+        .user-dropdown.show {
+            display: block;
+        }
+
+        .user-dropdown a {
+            padding: 10px 15px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+            color: var(--text-color);
+            transition: background-color 0.3s;
+        }
+
+        .user-dropdown a:hover {
+            background-color: rgba(56, 189, 248, 0.1);
         }
 
         nav ul {
@@ -174,8 +320,9 @@
             background-color: var(--card-bg);
             border-radius: 12px;
             padding: 2rem;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
             border: 1px solid var(--border-color);
+            transition: background-color 0.3s, border-color 0.3s;
         }
 
         .calculator-card h3, .results-card h3 {
@@ -214,7 +361,7 @@
             color: var(--text-secondary);
         }
 
-        input, textarea {
+        input, textarea, select {
             width: 100%;
             padding: 12px 15px 12px 45px;
             background-color: var(--darker-bg);
@@ -222,10 +369,10 @@
             border-radius: 8px;
             color: var(--text-color);
             font-size: 1rem;
-            transition: border-color 0.3s;
+            transition: border-color 0.3s, background-color 0.3s;
         }
 
-        input:focus, textarea:focus {
+        input:focus, textarea:focus, select:focus {
             outline: none;
             border-color: var(--accent-color);
         }
@@ -289,6 +436,7 @@
             padding: 1.5rem;
             border-radius: 8px;
             border-left: 4px solid var(--accent-color);
+            transition: background-color 0.3s;
         }
 
         .result-title {
@@ -309,6 +457,7 @@
             background-color: var(--darker-bg);
             border-radius: 8px;
             border: 1px solid var(--border-color);
+            transition: background-color 0.3s, border-color 0.3s;
         }
 
         .sorted-numbers p {
@@ -321,6 +470,52 @@
             font-weight: 600;
             color: var(--success-color);
             word-break: break-all;
+        }
+
+        /* Additional Statistics */
+        .additional-stats {
+            margin-top: 2rem;
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            border: 1px solid var(--border-color);
+            transition: background-color 0.3s, border-color 0.3s;
+        }
+
+        .additional-stats h3 {
+            color: var(--accent-color);
+            margin-bottom: 1.5rem;
+            font-size: 1.8rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .stat-box {
+            background-color: var(--darker-bg);
+            padding: 1.5rem;
+            border-radius: 8px;
+            text-align: center;
+            transition: background-color 0.3s;
+        }
+
+        .stat-title {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            margin-bottom: 5px;
+        }
+
+        .stat-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--accent-color);
         }
 
         /* About Page */
@@ -351,9 +546,10 @@
             background-color: var(--card-bg);
             border-radius: 12px;
             padding: 2.5rem;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
             border: 1px solid var(--border-color);
             margin-bottom: 2rem;
+            transition: background-color 0.3s, border-color 0.3s;
         }
 
         .about-card h3 {
@@ -381,6 +577,7 @@
             border-radius: 8px;
             text-align: center;
             border-top: 4px solid var(--primary-color);
+            transition: background-color 0.3s;
         }
 
         .feature i {
@@ -412,8 +609,9 @@
             background-color: var(--card-bg);
             border-radius: 12px;
             padding: 2rem;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
             border: 1px solid var(--border-color);
+            transition: background-color 0.3s, border-color 0.3s;
         }
 
         .contact-info h3 {
@@ -454,12 +652,208 @@
             color: var(--text-secondary);
         }
 
+        /* Auth Pages */
+        .auth-container {
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        .auth-card {
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            padding: 2.5rem;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            border: 1px solid var(--border-color);
+            transition: background-color 0.3s, border-color 0.3s;
+        }
+
+        .auth-card h2 {
+            color: var(--accent-color);
+            margin-bottom: 1.5rem;
+            font-size: 2rem;
+            text-align: center;
+        }
+
+        .auth-form .input-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .auth-options {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 1.5rem;
+            font-size: 0.9rem;
+        }
+
+        .auth-options a {
+            color: var(--accent-color);
+            text-decoration: none;
+        }
+
+        .auth-options a:hover {
+            text-decoration: underline;
+        }
+
+        .btn-auth {
+            width: 100%;
+            justify-content: center;
+            margin-top: 1rem;
+        }
+
+        /* Profile Page */
+        .profile-container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .profile-header {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+            margin-bottom: 3rem;
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            border: 1px solid var(--border-color);
+            transition: background-color 0.3s, border-color 0.3s;
+        }
+
+        @media (max-width: 768px) {
+            .profile-header {
+                flex-direction: column;
+                text-align: center;
+            }
+        }
+
+        .profile-avatar {
+            position: relative;
+            width: 150px;
+            height: 150px;
+        }
+
+        .avatar-img {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid var(--accent-color);
+        }
+
+        .avatar-change {
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+            background-color: var(--accent-color);
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+        }
+
+        .profile-info h2 {
+            color: var(--accent-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .profile-info p {
+            color: var(--text-secondary);
+            margin-bottom: 1rem;
+        }
+
+        .profile-settings {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .settings-card {
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            border: 1px solid var(--border-color);
+            transition: background-color 0.3s, border-color 0.3s;
+        }
+
+        .settings-card h3 {
+            color: var(--accent-color);
+            margin-bottom: 1.5rem;
+            font-size: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .settings-option {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .settings-option:last-child {
+            border-bottom: none;
+        }
+
+        .toggle-switch {
+            position: relative;
+            width: 60px;
+            height: 30px;
+        }
+
+        .toggle-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: var(--text-secondary);
+            transition: .4s;
+            border-radius: 34px;
+        }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 22px;
+            width: 22px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+
+        input:checked + .slider {
+            background-color: var(--accent-color);
+        }
+
+        input:checked + .slider:before {
+            transform: translateX(30px);
+        }
+
         /* Footer */
         footer {
             background-color: var(--darker-bg);
             padding: 1.5rem 0;
             border-top: 1px solid var(--border-color);
             margin-top: auto;
+            transition: background-color 0.3s, border-color 0.3s;
         }
 
         .footer-content {
@@ -498,6 +892,14 @@
 
         /* Responsive */
         @media (max-width: 768px) {
+            .header-controls {
+                gap: 0.5rem;
+            }
+            
+            .language-btn span, .user-btn span {
+                display: none;
+            }
+            
             nav ul {
                 display: none;
                 position: absolute;
@@ -546,11 +948,76 @@
             left: 0;
             width: 100%;
             z-index: 99;
+            transition: background-color 0.3s, border-color 0.3s;
         }
 
         .windows-notice a {
             color: var(--accent-color);
             text-decoration: none;
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal.show {
+            display: flex;
+        }
+
+        .modal-content {
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            padding: 2rem;
+            width: 90%;
+            max-width: 500px;
+            max-height: 90vh;
+            overflow-y: auto;
+            border: 1px solid var(--border-color);
+            transition: background-color 0.3s, border-color 0.3s;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .modal-header h3 {
+            color: var(--accent-color);
+            font-size: 1.5rem;
+        }
+
+        .close-modal {
+            background: none;
+            border: none;
+            color: var(--text-color);
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        .how-to-list {
+            margin-left: 1.5rem;
+            margin-top: 1rem;
+        }
+
+        .how-to-list li {
+            margin-bottom: 0.8rem;
+        }
+
+        .auth-options-centered {
+            justify-content: center;
+            margin-top: 2rem;
         }
     </style>
 </head>
@@ -563,10 +1030,6 @@
                 <h1>Median <span>Analyzer</span></h1>
             </div>
             
-            <button class="mobile-menu-btn" id="mobileMenuBtn">
-                <i class="fas fa-bars"></i>
-            </button>
-            
             <nav>
                 <ul id="navMenu">
                     <li><a href="#" class="nav-link active" data-page="home">Home</a></li>
@@ -574,6 +1037,60 @@
                     <li><a href="#" class="nav-link" data-page="contact">Contact</a></li>
                 </ul>
             </nav>
+            
+            <div class="header-controls">
+                <div class="language-selector">
+                    <button class="language-btn" id="languageBtn">
+                        <i class="fas fa-globe"></i>
+                        <span>English</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <div class="language-dropdown" id="languageDropdown">
+                        <div class="language-option" data-lang="en">
+                            <i class="fas fa-language"></i>
+                            <span>English</span>
+                        </div>
+                        <div class="language-option" data-lang="ar">
+                            <i class="fas fa-language"></i>
+                            <span>العربية</span>
+                        </div>
+                        <div class="language-option" data-lang="de">
+                            <i class="fas fa-language"></i>
+                            <span>Deutsch</span>
+                        </div>
+                        <div class="language-option" data-lang="zh">
+                            <i class="fas fa-language"></i>
+                            <span>中文</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <button type="button" class="theme-toggle" id="themeToggle" title="Toggle theme">
+                    <i class="fas fa-moon"></i>
+                </button>
+                
+                <div class="user-menu">
+                    <button class="user-btn" id="userBtn">
+                        <i class="fas fa-user"></i>
+                        <span id="userName">Guest</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <div class="user-dropdown" id="userDropdown">
+                        <a href="#" class="nav-link" data-page="profile">
+                            <i class="fas fa-user-circle"></i>
+                            <span>Profile</span>
+                        </a>
+                        <a href="#" id="loginLogoutBtn">
+                            <i class="fas fa-sign-in-alt"></i>
+                            <span>Login</span>
+                        </a>
+                    </div>
+                </div>
+                
+                <button class="mobile-menu-btn" id="mobileMenuBtn">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
         </div>
     </header>
 
@@ -583,53 +1100,76 @@
             <!-- Home Page -->
             <div id="home-page" class="page active">
                 <div class="calculator-header">
-                    <h2>Median Analyzer</h2>
-                    <p>A simple statistics calculator to find the median of a set of numbers.</p>
+                    <h2 data-translate="home_title">Median Analyzer</h2>
+                    <p data-translate="home_subtitle">A simple statistics calculator to find the median of a set of numbers.</p>
                 </div>
                 
                 <div class="calculator-container">
                     <div class="calculator-card">
-                        <h3><i class="fas fa-calculator"></i> Statistics Calculator</h3>
+                        <h3><i class="fas fa-calculator"></i> <span data-translate="calculator_title">Statistics Calculator</span></h3>
                         
                         <div class="input-group">
-                            <label for="numbers-input">Enter numbers (comma separated)</label>
+                            <label for="numbers-input" data-translate="numbers_label">Enter numbers (comma separated)</label>
                             <div class="input-with-icon">
                                 <i class="fas fa-list-ol"></i>
-                                <input type="text" id="numbers-input" placeholder="ex:1,2,3,4,etc..." value="" />
+                                <input type="text" id="numbers-input" placeholder="3,3,24,5645,24,234" value="3,3,24,5645,24,234">
                             </div>
-                            <span class="input-hint">Example: 5, 10, 15, 20 or 5 10 15 20</span>
+                            <span class="input-hint" data-translate="numbers_hint">Example: 5, 10, 15, 20 or 5 10 15 20</span>
                         </div>
                         
                         <button class="btn btn-calculate" id="calculate-btn">
-                            <i class="fas fa-calculator"></i> Calculate
+                            <i class="fas fa-calculator"></i> <span data-translate="calculate_btn">Calculate</span>
                         </button>
                     </div>
                     
                     <div class="results-card">
-                        <h3><i class="fas fa-chart-bar"></i> Results</h3>
+                        <h3><i class="fas fa-chart-bar"></i> <span data-translate="results_title">Results</span></h3>
                         
                         <div class="results-grid">
                             <div class="result-box">
-                                <div class="result-title">Mean</div>
+                                <div class="result-title" data-translate="mean_label">Mean</div>
                                 <div class="result-value" id="mean-result">0.00</div>
                             </div>
                             <div class="result-box">
-                                <div class="result-title">Median (Q2)</div>
+                                <div class="result-title" data-translate="median_label">Median (Q2)</div>
                                 <div class="result-value" id="median-result">0</div>
                             </div>
                             <div class="result-box">
-                                <div class="result-title">Q1</div>
+                                <div class="result-title" data-translate="q1_label">Q1</div>
                                 <div class="result-value" id="q1-result">0</div>
                             </div>
                             <div class="result-box">
-                                <div class="result-title">Q3</div>
+                                <div class="result-title" data-translate="q3_label">Q3</div>
                                 <div class="result-value" id="q3-result">0</div>
                             </div>
                         </div>
                         
                         <div class="sorted-numbers">
-                            <p>Sorted Numbers:</p>
+                            <p data-translate="sorted_label">Sorted Numbers:</p>
                             <div class="numbers-list" id="sorted-numbers">No data yet</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="additional-stats">
+                    <h3><i class="fas fa-chart-pie"></i> <span data-translate="additional_stats">Additional Statistics</span></h3>
+                    
+                    <div class="stats-grid">
+                        <div class="stat-box">
+                            <div class="stat-title" data-translate="mode_label">Mode</div>
+                            <div class="stat-value" id="mode-result">-</div>
+                        </div>
+                        <div class="stat-box">
+                            <div class="stat-title" data-translate="range_label">Range</div>
+                            <div class="stat-value" id="range-result">0</div>
+                        </div>
+                        <div class="stat-box">
+                            <div class="stat-title" data-translate="variance_label">Variance</div>
+                            <div class="stat-value" id="variance-result">0.00</div>
+                        </div>
+                        <div class="stat-box">
+                            <div class="stat-title" data-translate="std_dev_label">Std. Deviation</div>
+                            <div class="stat-value" id="std-dev-result">0.00</div>
                         </div>
                     </div>
                 </div>
@@ -638,49 +1178,49 @@
             <!-- About Page -->
             <div id="about-page" class="page">
                 <div class="page-header">
-                    <h2>About Median Analyzer</h2>
-                    <p>Learn more about our statistics calculator and its features</p>
+                    <h2 data-translate="about_title">About Median Analyzer</h2>
+                    <p data-translate="about_subtitle">Learn more about our statistics calculator and its features</p>
                 </div>
                 
                 <div class="about-content">
                     <div class="about-card">
-                        <h3>What is Median Analyzer?</h3>
-                        <p>Median Analyzer is a powerful yet simple-to-use statistics calculator designed to help students, researchers, and professionals quickly calculate key statistical measures from any dataset.</p>
+                        <h3 data-translate="about_what">What is Median Analyzer?</h3>
+                        <p data-translate="about_desc1">Median Analyzer is a powerful yet simple-to-use statistics calculator designed to help students, researchers, and professionals quickly calculate key statistical measures from any dataset.</p>
                         
-                        <p>Our tool focuses on providing accurate calculations for median, quartiles, mean, and other essential statistics with an intuitive interface and instant results.</p>
+                        <p data-translate="about_desc2">Our tool focuses on providing accurate calculations for median, quartiles, mean, and other essential statistics with an intuitive interface and instant results.</p>
                         
                         <div class="features">
                             <div class="feature">
                                 <i class="fas fa-bolt"></i>
-                                <h4>Fast Calculations</h4>
-                                <p>Get instant results for any dataset with our optimized algorithms.</p>
+                                <h4 data-translate="feature1_title">Fast Calculations</h4>
+                                <p data-translate="feature1_desc">Get instant results for any dataset with our optimized algorithms.</p>
                             </div>
                             <div class="feature">
                                 <i class="fas fa-check-circle"></i>
-                                <h4>Accurate Results</h4>
-                                <p>Precise calculations following statistical best practices and formulas.</p>
+                                <h4 data-translate="feature2_title">Accurate Results</h4>
+                                <p data-translate="feature2_desc">Precise calculations following statistical best practices and formulas.</p>
                             </div>
                             <div class="feature">
                                 <i class="fas fa-laptop"></i>
-                                <h4>Responsive Design</h4>
-                                <p>Use our tool on any device - desktop, tablet, or mobile.</p>
+                                <h4 data-translate="feature3_title">Responsive Design</h4>
+                                <p data-translate="feature3_desc">Use our tool on any device - desktop, tablet, or mobile.</p>
                             </div>
                             <div class="feature">
                                 <i class="fas fa-chart-pie"></i>
-                                <h4>Multiple Statistics</h4>
-                                <p>Calculate mean, median, quartiles, and more from a single input.</p>
+                                <h4 data-translate="feature4_title">Multiple Statistics</h4>
+                                <p data-translate="feature4_desc">Calculate mean, median, quartiles, and more from a single input.</p>
                             </div>
                         </div>
                     </div>
                     
                     <div class="about-card">
-                        <h3>How to Use</h3>
-                        <p>Using Median Analyzer is straightforward:</p>
-                        <ol style="margin-left: 1.5rem; margin-top: 1rem;">
-                            <li style="margin-bottom: 0.8rem;">Enter your numbers in the input field on the Home page</li>
-                            <li style="margin-bottom: 0.8rem;">Separate numbers with commas, spaces, or new lines</li>
-                            <li style="margin-bottom: 0.8rem;">Click the "Calculate" button to see your results</li>
-                            <li>View the calculated statistics and sorted numbers</li>
+                        <h3 data-translate="how_to_use">How to Use</h3>
+                        <p data-translate="how_to_desc">Using Median Analyzer is straightforward:</p>
+                        <ol class="how-to-list">
+                            <li data-translate="step1">Enter your numbers in the input field on the Home page</li>
+                            <li data-translate="step2">Separate numbers with commas, spaces, or new lines</li>
+                            <li data-translate="step3">Click the "Calculate" button to see your results</li>
+                            <li data-translate="step4">View the calculated statistics and sorted numbers</li>
                         </ol>
                     </div>
                 </div>
@@ -689,53 +1229,53 @@
             <!-- Contact Page -->
             <div id="contact-page" class="page">
                 <div class="page-header">
-                    <h2>Contact Us</h2>
-                    <p>Get in touch with us for questions, feedback, or support</p>
+                    <h2 data-translate="contact_title">Contact Us</h2>
+                    <p data-translate="contact_subtitle">Get in touch with us for questions, feedback, or support</p>
                 </div>
                 
                 <div class="contact-container">
                     <div class="contact-info">
-                        <h3><i class="fas fa-envelope"></i> Contact Information</h3>
-                        <p>Have questions about Median Analyzer or need statistical consulting? Reach out to us using the information below.</p>
+                        <h3><i class="fas fa-envelope"></i> <span data-translate="contact_info">Contact Information</span></h3>
+                        <p data-translate="contact_desc">Have questions about Median Analyzer or need statistical consulting? Reach out to us using the information below.</p>
                         
                         <div class="contact-details">
                             <div class="contact-item">
                                 <i class="fas fa-envelope"></i>
                                 <div>
-                                    <h4>Email</h4>
+                                    <h4 data-translate="email_label">Email</h4>
                                     <p>support@mediananalyzer.com</p>
                                 </div>
                             </div>
                             <div class="contact-item">
                                 <i class="fas fa-phone"></i>
                                 <div>
-                                    <h4>Phone</h4>
-                                    <p>+20-15-5123-4567</p>
+                                    <h4 data-translate="phone_label">Phone</h4>
+                                    <p>+1 (555) 123-4567</p>
                                 </div>
                             </div>
                             <div class="contact-item">
                                 <i class="fas fa-map-marker-alt"></i>
                                 <div>
-                                    <h4>Address</h4>
+                                    <h4 data-translate="address_label">Address</h4>
                                     <p>123 Statistics Street, Data City, DC 10001</p>
                                 </div>
                             </div>
                             <div class="contact-item">
                                 <i class="fas fa-clock"></i>
                                 <div>
-                                    <h4>Business Hours</h4>
-                                    <p>Monday - Friday: 9AM - 6PM EST</p>
+                                    <h4 data-translate="hours_label">Business Hours</h4>
+                                    <p data-translate="hours_value">Monday - Friday: 9AM - 6PM EST</p>
                                 </div>
                             </div>
                         </div>
                     </div>
                     
                     <div class="calculator-card">
-                        <h3><i class="fas fa-paper-plane"></i> Send a Message</h3>
+                        <h3><i class="fas fa-paper-plane"></i> <span data-translate="send_message">Send a Message</span></h3>
                         
                         <form id="contact-form">
                             <div class="input-group">
-                                <label for="contact-name">Your Name</label>
+                                <label for="contact-name" data-translate="name_label">Your Name</label>
                                 <div class="input-with-icon">
                                     <i class="fas fa-user"></i>
                                     <input type="text" id="contact-name" placeholder="John Smith" required>
@@ -743,7 +1283,7 @@
                             </div>
                             
                             <div class="input-group">
-                                <label for="contact-email">Your Email</label>
+                                <label for="contact-email" data-translate="email_label">Your Email</label>
                                 <div class="input-with-icon">
                                     <i class="fas fa-envelope"></i>
                                     <input type="email" id="contact-email" placeholder="john@example.com" required>
@@ -751,17 +1291,200 @@
                             </div>
                             
                             <div class="input-group">
-                                <label for="contact-message">Your Message</label>
+                                <label for="contact-message" data-translate="message_label">Your Message</label>
                                 <div class="input-with-icon">
                                     <i class="fas fa-comment"></i>
-                                    <textarea id="contact-message" placeholder="Type your message here..." required></textarea>
+                                    <textarea id="contact-message" placeholder="Type your message here..." required data-translate="message_placeholder"></textarea>
                                 </div>
                             </div>
                             
                             <button type="submit" class="btn btn-calculate">
-                                <i class="fas fa-paper-plane"></i> Send Message
+                                <i class="fas fa-paper-plane"></i> <span data-translate="send_btn">Send Message</span>
                             </button>
                         </form>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Login Page -->
+            <div id="login-page" class="page">
+                <div class="auth-container">
+                    <div class="auth-card">
+                        <h2 data-translate="login_title">Login to Your Account</h2>
+                        
+                        <form id="login-form" class="auth-form">
+                            <div class="input-group">
+                                <label for="login-email" data-translate="email_label">Email</label>
+                                <div class="input-with-icon">
+                                    <i class="fas fa-envelope"></i>
+                                    <input type="email" id="login-email" placeholder="your@email.com" required>
+                                </div>
+                            </div>
+                            
+                            <div class="input-group">
+                                <label for="login-password" data-translate="password_label">Password</label>
+                                <div class="input-with-icon">
+                                    <i class="fas fa-lock"></i>
+                                    <input type="password" id="login-password" placeholder="Enter your password" required>
+                                </div>
+                            </div>
+                            
+                            <button type="submit" class="btn btn-auth">
+                                <i class="fas fa-sign-in-alt"></i> <span data-translate="login_btn">Login</span>
+                            </button>
+                            
+                            <div class="auth-options">
+                                <label>
+                                    <input type="checkbox" id="remember-me">
+                                    <span data-translate="remember_me">Remember me</span>
+                                </label>
+                                <a href="#" id="forgot-password" data-translate="forgot_password">Forgot password?</a>
+                            </div>
+                            
+                            <div class="auth-options auth-options-centered">
+                                <span data-translate="no_account">Don't have an account?</span>
+                                <a href="#" class="nav-link" data-page="signup" data-translate="signup_link">Sign up</a>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Signup Page -->
+            <div id="signup-page" class="page">
+                <div class="auth-container">
+                    <div class="auth-card">
+                        <h2 data-translate="signup_title">Create an Account</h2>
+                        
+                        <form id="signup-form" class="auth-form">
+                            <div class="input-group">
+                                <label for="signup-name" data-translate="full_name">Full Name</label>
+                                <div class="input-with-icon">
+                                    <i class="fas fa-user"></i>
+                                    <input type="text" id="signup-name" placeholder="John Smith" required>
+                                </div>
+                            </div>
+                            
+                            <div class="input-group">
+                                <label for="signup-email" data-translate="email_label">Email</label>
+                                <div class="input-with-icon">
+                                    <i class="fas fa-envelope"></i>
+                                    <input type="email" id="signup-email" placeholder="your@email.com" required>
+                                </div>
+                            </div>
+                            
+                            <div class="input-group">
+                                <label for="signup-password" data-translate="password_label">Password</label>
+                                <div class="input-with-icon">
+                                    <i class="fas fa-lock"></i>
+                                    <input type="password" id="signup-password" placeholder="Create a password" required>
+                                </div>
+                            </div>
+                            
+                            <div class="input-group">
+                                <label for="signup-confirm-password" data-translate="confirm_password">Confirm Password</label>
+                                <div class="input-with-icon">
+                                    <i class="fas fa-lock"></i>
+                                    <input type="password" id="signup-confirm-password" placeholder="Confirm your password" required>
+                                </div>
+                            </div>
+                            
+                            <button type="submit" class="btn btn-auth">
+                                <i class="fas fa-user-plus"></i> <span data-translate="signup_btn">Create Account</span>
+                            </button>
+                            
+                            <div class="auth-options auth-options-centered">
+                                <span data-translate="have_account">Already have an account?</span>
+                                <a href="#" class="nav-link" data-page="login" data-translate="login_link">Login</a>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Profile Page -->
+            <div id="profile-page" class="page">
+                <div class="profile-container">
+                    <div class="page-header">
+                        <h2 data-translate="profile_title">My Profile</h2>
+                        <p data-translate="profile_subtitle">Manage your account settings and preferences</p>
+                    </div>
+                    
+                    <div class="profile-header">
+                        <div class="profile-avatar">
+                            <img src="https://ui-avatars.com/api/?name=Guest+User&background=4a6fa5&color=fff&size=150" alt="Avatar" class="avatar-img" id="avatarImg">
+                            <div class="avatar-change" id="avatarChangeBtn">
+                                <i class="fas fa-camera"></i>
+                            </div>
+                        </div>
+                        
+                        <div class="profile-info">
+                            <h2 id="profileName">Guest User</h2>
+                            <p id="profileEmail">guest@example.com</p>
+                            <p class="member-since" data-translate="member_since">Member since: <span id="memberSince">Today</span></p>
+                            <button class="btn" id="editProfileBtn">
+                                <i class="fas fa-edit"></i> <span data-translate="edit_profile">Edit Profile</span>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="profile-settings">
+                        <div class="settings-card">
+                            <h3><i class="fas fa-palette"></i> <span data-translate="appearance_settings">Appearance Settings</span></h3>
+                            
+                            <div class="settings-option">
+                                <div>
+                                    <h4 data-translate="dark_mode">Dark Mode</h4>
+                                    <p data-translate="dark_mode_desc">Toggle between dark and light theme</p>
+                                </div>
+                                <label class="toggle-switch">
+                                    <input type="checkbox" id="darkModeToggle" checked>
+                                    <span class="slider"></span>
+                                </label>
+                            </div>
+                            
+                            <div class="settings-option">
+                                <div>
+                                    <h4 data-translate="language_pref">Language Preference</h4>
+                                    <p data-translate="language_desc">Choose your preferred language</p>
+                                </div>
+                                <select id="profileLanguage">
+                                    <option value="en">English</option>
+                                    <option value="ar">العربية</option>
+                                    <option value="de">Deutsch</option>
+                                    <option value="zh">中文</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="settings-card">
+                            <h3><i class="fas fa-chart-bar"></i> <span data-translate="calculator_settings">Calculator Settings</span></h3>
+                            
+                            <div class="settings-option">
+                                <div>
+                                    <h4 data-translate="auto_calculate">Auto Calculate</h4>
+                                    <p data-translate="auto_calculate_desc">Automatically calculate when input changes</p>
+                                </div>
+                                <label class="toggle-switch">
+                                    <input type="checkbox" id="autoCalculateToggle">
+                                    <span class="slider"></span>
+                                </label>
+                            </div>
+                            
+                            <div class="settings-option">
+                                <div>
+                                    <h4 data-translate="decimal_places">Decimal Places</h4>
+                                    <p data-translate="decimal_places_desc">Number of decimal places to display</p>
+                                </div>
+                                <select id="decimalPlaces">
+                                    <option value="0">0</option>
+                                    <option value="1">1</option>
+                                    <option value="2" selected>2</option>
+                                    <option value="3">3</option>
+                                    <option value="4">4</option>
+                                </select>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -772,31 +1495,633 @@
     <footer>
         <div class="container footer-content">
             <div class="copyright">
-                &copy; 2023 Median Analyzer. All rights reserved.
+                &copy; 2023 Median Analyzer. <span data-translate="all_rights">All rights reserved.</span>
             </div>
             <div class="footer-links">
-                <a href="#" class="nav-link" data-page="home">Home</a>
-                <a href="#" class="nav-link" data-page="about">About</a>
-                <a href="#" class="nav-link" data-page="contact">Contact</a>
-                <a href="#">Privacy Policy</a>
+                <a href="#" class="nav-link" data-page="home" data-translate="footer_home">Home</a>
+                <a href="#" class="nav-link" data-page="about" data-translate="footer_about">About</a>
+                <a href="#" class="nav-link" data-page="contact" data-translate="footer_contact">Contact</a>
+                <a href="#" data-translate="footer_privacy">Privacy Policy</a>
             </div>
         </div>
     </footer>
 
     <!-- Windows Activation Notice -->
     <div class="windows-notice">
-        <i class="fas fa-exclamation-circle"></i> Activate Windows. Go to Settings to activate Windows.
+        <i class="fas fa-exclamation-circle"></i> <span data-translate="windows_notice">Activate Windows. Go to Settings to activate Windows.</span>
+    </div>
+
+    <!-- Avatar Upload Modal -->
+    <div class="modal" id="avatarModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 data-translate="change_avatar">Change Avatar</h3>
+                <button class="close-modal" id="closeAvatarModal">&times;</button>
+            </div>
+            
+            <div class="input-group">
+                <label data-translate="avatar_url">Avatar Image URL</label>
+                <div class="input-with-icon">
+                    <i class="fas fa-link"></i>
+                    <input type="text" id="avatarUrl" placeholder="https://example.com/avatar.jpg">
+                </div>
+                <span class="input-hint" data-translate="avatar_hint">Enter a URL for your avatar image or use the default options below.</span>
+            </div>
+            
+            <div class="avatar-section">
+                <h4 class="avatar-section-title" data-translate="default_avatars">Default Avatars</h4>
+                <div class="avatar-options-container">
+                    <div class="avatar-option" data-avatar="male">
+                        <img src="https://ui-avatars.com/api/?name=John+Doe&background=4a6fa5&color=fff&size=80" alt="Male Avatar" class="avatar-thumbnail">
+                    </div>
+                    <div class="avatar-option" data-avatar="female">
+                        <img src="https://ui-avatars.com/api/?name=Jane+Smith&background=e11d48&color=fff&size=80" alt="Female Avatar" class="avatar-thumbnail">
+                    </div>
+                    <div class="avatar-option" data-avatar="neutral">
+                        <img src="https://ui-avatars.com/api/?name=Alex+Taylor&background=10b981&color=fff&size=80" alt="Neutral Avatar" class="avatar-thumbnail">
+                    </div>
+                </div>
+            </div>
+            
+            <button class="btn btn-full-width" id="saveAvatarBtn">
+                <i class="fas fa-save"></i> <span data-translate="save_avatar">Save Avatar</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- Edit Profile Modal -->
+    <div class="modal" id="editProfileModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 data-translate="edit_profile">Edit Profile</h3>
+                <button class="close-modal" id="closeEditProfileModal">&times;</button>
+            </div>
+            
+            <form id="edit-profile-form">
+                <div class="input-group">
+                    <label for="edit-name" data-translate="full_name">Full Name</label>
+                    <div class="input-with-icon">
+                        <i class="fas fa-user"></i>
+                        <input type="text" id="edit-name" placeholder="John Smith" required>
+                    </div>
+                </div>
+                
+                <div class="input-group">
+                    <label for="edit-email" data-translate="email_label">Email</label>
+                    <div class="input-with-icon">
+                        <i class="fas fa-envelope"></i>
+                        <input type="email" id="edit-email" placeholder="your@email.com" required>
+                    </div>
+                </div>
+                
+                <div class="input-group">
+                    <label for="edit-password" data-translate="new_password">New Password (optional)</label>
+                    <div class="input-with-icon">
+                        <i class="fas fa-lock"></i>
+                        <input type="password" id="edit-password" placeholder="Leave blank to keep current">
+                    </div>
+                </div>
+                
+                <div class="input-group">
+                    <label for="edit-confirm-password" data-translate="confirm_password">Confirm New Password</label>
+                    <div class="input-with-icon">
+                        <i class="fas fa-lock"></i>
+                        <input type="password" id="edit-confirm-password" placeholder="Confirm new password">
+                    </div>
+                </div>
+                
+                <button type="submit" class="btn btn-full-width">
+                    <i class="fas fa-save"></i> <span data-translate="save_changes">Save Changes</span>
+                </button>
+            </form>
+        </div>
     </div>
 
     <script>
-        // Navigation between pages
+        // Application State
+        const state = {
+            currentUser: null,
+            isLoggedIn: false,
+            language: 'en',
+            darkMode: true,
+            translations: {},
+            userSettings: {
+                autoCalculate: false,
+                decimalPlaces: 2
+            }
+        };
+
+        // Translations for different languages
+        const translations = {
+            en: {
+                // Navigation
+                home_title: "Median Analyzer",
+                home_subtitle: "A simple statistics calculator to find the median of a set of numbers.",
+                about_title: "About Median Analyzer",
+                about_subtitle: "Learn more about our statistics calculator and its features",
+                contact_title: "Contact Us",
+                contact_subtitle: "Get in touch with us for questions, feedback, or support",
+                login_title: "Login to Your Account",
+                signup_title: "Create an Account",
+                profile_title: "My Profile",
+                profile_subtitle: "Manage your account settings and preferences",
+                
+                // Calculator
+                calculator_title: "Statistics Calculator",
+                numbers_label: "Enter numbers (comma separated)",
+                numbers_hint: "Example: 5, 10, 15, 20 or 5 10 15 20",
+                calculate_btn: "Calculate",
+                results_title: "Results",
+                mean_label: "Mean",
+                median_label: "Median (Q2)",
+                q1_label: "Q1",
+                q3_label: "Q3",
+                sorted_label: "Sorted Numbers:",
+                additional_stats: "Additional Statistics",
+                mode_label: "Mode",
+                range_label: "Range",
+                variance_label: "Variance",
+                std_dev_label: "Std. Deviation",
+                
+                // About page
+                about_what: "What is Median Analyzer?",
+                about_desc1: "Median Analyzer is a powerful yet simple-to-use statistics calculator designed to help students, researchers, and professionals quickly calculate key statistical measures from any dataset.",
+                about_desc2: "Our tool focuses on providing accurate calculations for median, quartiles, mean, and other essential statistics with an intuitive interface and instant results.",
+                feature1_title: "Fast Calculations",
+                feature1_desc: "Get instant results for any dataset with our optimized algorithms.",
+                feature2_title: "Accurate Results",
+                feature2_desc: "Precise calculations following statistical best practices and formulas.",
+                feature3_title: "Responsive Design",
+                feature3_desc: "Use our tool on any device - desktop, tablet, or mobile.",
+                feature4_title: "Multiple Statistics",
+                feature4_desc: "Calculate mean, median, quartiles, and more from a single input.",
+                how_to_use: "How to Use",
+                how_to_desc: "Using Median Analyzer is straightforward:",
+                step1: "Enter your numbers in the input field on the Home page",
+                step2: "Separate numbers with commas, spaces, or new lines",
+                step3: "Click the \"Calculate\" button to see your results",
+                step4: "View the calculated statistics and sorted numbers",
+                
+                // Contact page
+                contact_info: "Contact Information",
+                contact_desc: "Have questions about Median Analyzer or need statistical consulting? Reach out to us using the information below.",
+                email_label: "Email",
+                phone_label: "Phone",
+                address_label: "Address",
+                hours_label: "Business Hours",
+                hours_value: "Monday - Friday: 9AM - 6PM EST",
+                send_message: "Send a Message",
+                name_label: "Your Name",
+                message_label: "Your Message",
+                message_placeholder: "Type your message here...",
+                send_btn: "Send Message",
+                
+                // Auth pages
+                password_label: "Password",
+                remember_me: "Remember me",
+                forgot_password: "Forgot password?",
+                no_account: "Don't have an account?",
+                signup_link: "Sign up",
+                have_account: "Already have an account?",
+                login_link: "Login",
+                login_btn: "Login",
+                full_name: "Full Name",
+                confirm_password: "Confirm Password",
+                signup_btn: "Create Account",
+                
+                // Profile page
+                member_since: "Member since:",
+                edit_profile: "Edit Profile",
+                appearance_settings: "Appearance Settings",
+                dark_mode: "Dark Mode",
+                dark_mode_desc: "Toggle between dark and light theme",
+                language_pref: "Language Preference",
+                language_desc: "Choose your preferred language",
+                calculator_settings: "Calculator Settings",
+                auto_calculate: "Auto Calculate",
+                auto_calculate_desc: "Automatically calculate when input changes",
+                decimal_places: "Decimal Places",
+                decimal_places_desc: "Number of decimal places to display",
+                
+                // Modals
+                change_avatar: "Change Avatar",
+                avatar_url: "Avatar Image URL",
+                avatar_hint: "Enter a URL for your avatar image or use the default options below.",
+                default_avatars: "Default Avatars",
+                save_avatar: "Save Avatar",
+                new_password: "New Password (optional)",
+                save_changes: "Save Changes",
+                
+                // Footer
+                all_rights: "All rights reserved.",
+                footer_home: "Home",
+                footer_about: "About",
+                footer_contact: "Contact",
+                footer_privacy: "Privacy Policy",
+                
+                // Windows notice
+                windows_notice: "Activate Windows. Go to Settings to activate Windows."
+            },
+            ar: {
+                home_title: "محلل الوسيط",
+                home_subtitle: "آلة حاسبة إحصائية بسيطة للعثور على وسيط مجموعة من الأرقام.",
+                about_title: "حول محلل الوسيط",
+                about_subtitle: "تعرف على المزيد حول آلتنا الحاسبة الإحصائية وميزاتها",
+                contact_title: "اتصل بنا",
+                contact_subtitle: "تواصل معنا للأسئلة أو الملاحظات أو الدعم",
+                login_title: "تسجيل الدخول إلى حسابك",
+                signup_title: "إنشاء حساب",
+                profile_title: "ملفي الشخصي",
+                profile_subtitle: "إدارة إعدادات حسابك وتفضيلاتك",
+                
+                calculator_title: "آلة حاسبة إحصائية",
+                numbers_label: "أدخل الأرقام (مفصولة بفواصل)",
+                numbers_hint: "مثال: 5, 10, 15, 20 أو 5 10 15 20",
+                calculate_btn: "احسب",
+                results_title: "النتائج",
+                mean_label: "المتوسط",
+                median_label: "الوسيط (Q2)",
+                q1_label: "الربع الأول",
+                q3_label: "الربع الثالث",
+                sorted_label: "الأرقام المرتبة:",
+                additional_stats: "إحصائيات إضافية",
+                mode_label: "المنوال",
+                range_label: "المدى",
+                variance_label: "التباين",
+                std_dev_label: "الانحراف المعياري",
+                
+                about_what: "ما هو محلل الوسيط؟",
+                about_desc1: "محلل الوسيط هو آلة حاسبة إحصائية قوية وسهلة الاستخدام مصممة لمساعدة الطلاب والباحثين والمحترفين على حساب المقاييس الإحصائية الرئيسية من أي مجموعة بيانات بسرعة.",
+                about_desc2: "يركز أداتنا على توفير حسابات دقيقة للوسيط والأرباع والمتوسط والإحصائيات الأساسية الأخرى بواجهة سهلة الاستخدام ونتائج فورية.",
+                feature1_title: "حسابات سريعة",
+                feature1_desc: "احصل على نتائج فورية لأي مجموعة بيانات باستخدام خوارزمياتنا المحسنة.",
+                feature2_title: "نتائج دقيقة",
+                feature2_desc: "حسابات دقيقة تتبع أفضل الممارسات والصيغ الإحصائية.",
+                feature3_title: "تصميم متجاوب",
+                feature3_desc: "استخدم أداتنا على أي جهاز - سطح المكتب أو الجهاز اللوحي أو الهاتف المحمول.",
+                feature4_title: "إحصائيات متعددة",
+                feature4_desc: "احسب المتوسط والوسيط والأرباع والمزيد من مدخل واحد.",
+                how_to_use: "كيفية الاستخدام",
+                how_to_desc: "استخدام محلل الوسيط بسيط:",
+                step1: "أدخل أرقامك في حقل الإدخال في الصفحة الرئيسية",
+                step2: "افصل الأرقام بفواصل أو مسافات أو أسطر جديدة",
+                step3: "انقر على زر \"احسب\" لرؤية نتائجك",
+                step4: "اعرض الإحصائيات المحسوبة والأرقام المرتبة",
+                
+                contact_info: "معلومات الاتصال",
+                contact_desc: "هل لديك أسئلة حول محلل الوسيط أو تحتاج إلى استشارة إحصائية؟ تواصل معنا باستخدام المعلومات أدناه.",
+                email_label: "البريد الإلكتروني",
+                phone_label: "الهاتف",
+                address_label: "العنوان",
+                hours_label: "ساعات العمل",
+                hours_value: "الاثنين - الجمعة: 9 صباحًا - 6 مساءً بتوقيت شرق الولايات المتحدة",
+                send_message: "إرسال رسالة",
+                name_label: "اسمك",
+                message_label: "رسالتك",
+                message_placeholder: "اكتب رسالتك هنا...",
+                send_btn: "إرسال الرسالة",
+                
+                password_label: "كلمة المرور",
+                remember_me: "تذكرني",
+                forgot_password: "نسيت كلمة المرور؟",
+                no_account: "ليس لديك حساب؟",
+                signup_link: "اشترك",
+                have_account: "لديك حساب بالفعل؟",
+                login_link: "تسجيل الدخول",
+                login_btn: "تسجيل الدخول",
+                full_name: "الاسم الكامل",
+                confirm_password: "تأكيد كلمة المرور",
+                signup_btn: "إنشاء حساب",
+                
+                member_since: "عضو منذ:",
+                edit_profile: "تعديل الملف الشخصي",
+                appearance_settings: "إعدادات المظهر",
+                dark_mode: "الوضع الداكن",
+                dark_mode_desc: "تبديل بين السمة الداكنة والفاتحة",
+                language_pref: "تفضيل اللغة",
+                language_desc: "اختر لغتك المفضلة",
+                calculator_settings: "إعدادات الآلة الحاسبة",
+                auto_calculate: "حساب تلقائي",
+                auto_calculate_desc: "احسب تلقائيًا عند تغيير الإدخال",
+                decimal_places: "المنازل العشرية",
+                decimal_places_desc: "عدد المنازل العشرية للعرض",
+                
+                change_avatar: "تغيير الصورة الرمزية",
+                avatar_url: "رابط صورة الصورة الرمزية",
+                avatar_hint: "أدخل رابطًا لصورة الصورة الرمزية أو استخدم الخيارات الافتراضية أدناه.",
+                default_avatars: "الصور الرمزية الافتراضية",
+                save_avatar: "حفظ الصورة الرمزية",
+                new_password: "كلمة مرور جديدة (اختياري)",
+                save_changes: "حفظ التغييرات",
+                
+                all_rights: "جميع الحقوق محفوظة.",
+                footer_home: "الرئيسية",
+                footer_about: "حول",
+                footer_contact: "اتصل بنا",
+                footer_privacy: "سياسة الخصوصية",
+                
+                windows_notice: "تفعيل Windows. انتقل إلى الإعدادات لتفعيل Windows."
+            },
+            de: {
+                home_title: "Median-Analysator",
+                home_subtitle: "Ein einfacher Statistikrechner, um den Median einer Zahlenmenge zu finden.",
+                about_title: "Über Median-Analysator",
+                about_subtitle: "Erfahren Sie mehr über unseren Statistikrechner und seine Funktionen",
+                contact_title: "Kontaktieren Sie uns",
+                contact_subtitle: "Kontaktieren Sie uns bei Fragen, Feedback oder Support",
+                login_title: "Bei Ihrem Konto anmelden",
+                signup_title: "Konto erstellen",
+                profile_title: "Mein Profil",
+                profile_subtitle: "Verwalten Sie Ihre Kontoeinstellungen und Präferenzen",
+                
+                calculator_title: "Statistikrechner",
+                numbers_label: "Zahlen eingeben (durch Kommas getrennt)",
+                numbers_hint: "Beispiel: 5, 10, 15, 20 oder 5 10 15 20",
+                calculate_btn: "Berechnen",
+                results_title: "Ergebnisse",
+                mean_label: "Mittelwert",
+                median_label: "Median (Q2)",
+                q1_label: "Q1",
+                q3_label: "Q3",
+                sorted_label: "Sortierte Zahlen:",
+                additional_stats: "Zusätzliche Statistiken",
+                mode_label: "Modus",
+                range_label: "Spannweite",
+                variance_label: "Varianz",
+                std_dev_label: "Std. Abweichung",
+                
+                about_what: "Was ist der Median-Analysator?",
+                about_desc1: "Median-Analysator ist ein leistungsstarker, aber einfach zu bedienender Statistikrechner, der Schülern, Forschern und Fachleuten hilft, schnell wichtige statistische Maße aus jedem Datensatz zu berechnen.",
+                about_desc2: "Unser Tool konzentriert sich auf die Bereitstellung genauer Berechnungen für Median, Quartile, Mittelwert und andere wesentliche Statistiken mit einer intuitiven Benutzeroberfläche und sofortigen Ergebnissen.",
+                feature1_title: "Schnelle Berechnungen",
+                feature1_desc: "Erhalten Sie sofortige Ergebnisse für jeden Datensatz mit unseren optimierten Algorithmen.",
+                feature2_title: "Genaue Ergebnisse",
+                feature2_desc: "Präzise Berechnungen nach statistischen Best Practices und Formeln.",
+                feature3_title: "Responsives Design",
+                feature3_desc: "Verwenden Sie unser Tool auf jedem Gerät - Desktop, Tablet oder Handy.",
+                feature4_title: "Mehrere Statistiken",
+                feature4_desc: "Berechnen Sie Mittelwert, Median, Quartile und mehr aus einer einzigen Eingabe.",
+                how_to_use: "So verwenden Sie es",
+                how_to_desc: "Die Verwendung von Median-Analysator ist einfach:",
+                step1: "Geben Sie Ihre Zahlen in das Eingabefeld auf der Startseite ein",
+                step2: "Trennen Sie Zahlen durch Kommas, Leerzeichen oder neue Zeilen",
+                step3: "Klicken Sie auf die Schaltfläche \"Berechnen\", um Ihre Ergebnisse zu sehen",
+                step4: "Sehen Sie sich die berechneten Statistiken und sortierten Zahlen an",
+                
+                contact_info: "Kontaktinformationen",
+                contact_desc: "Haben Sie Fragen zum Median-Analysator oder benötigen Sie statistische Beratung? Kontaktieren Sie uns mit den unten stehenden Informationen.",
+                email_label: "E-Mail",
+                phone_label: "Telefon",
+                address_label: "Adresse",
+                hours_label: "Geschäftszeiten",
+                hours_value: "Montag - Freitag: 9-18 Uhr EST",
+                send_message: "Nachricht senden",
+                name_label: "Ihr Name",
+                message_label: "Ihre Nachricht",
+                message_placeholder: "Geben Sie hier Ihre Nachricht ein...",
+                send_btn: "Nachricht senden",
+                
+                password_label: "Passwort",
+                remember_me: "Angemeldet bleiben",
+                forgot_password: "Passwort vergessen?",
+                no_account: "Noch kein Konto?",
+                signup_link: "Registrieren",
+                have_account: "Haben Sie bereits ein Konto?",
+                login_link: "Anmelden",
+                login_btn: "Anmelden",
+                full_name: "Vollständiger Name",
+                confirm_password: "Passwort bestätigen",
+                signup_btn: "Konto erstellen",
+                
+                member_since: "Mitglied seit:",
+                edit_profile: "Profil bearbeiten",
+                appearance_settings: "Erscheinungsbild-Einstellungen",
+                dark_mode: "Dunkler Modus",
+                dark_mode_desc: "Zwischen dunklem und hellem Thema wechseln",
+                language_pref: "Spracheinstellung",
+                language_desc: "Wählen Sie Ihre bevorzugte Sprache",
+                calculator_settings: "Rechner-Einstellungen",
+                auto_calculate: "Automatisch berechnen",
+                auto_calculate_desc: "Automatisch berechnen, wenn sich die Eingabe ändert",
+                decimal_places: "Dezimalstellen",
+                decimal_places_desc: "Anzahl der anzuzeigenden Dezimalstellen",
+                
+                change_avatar: "Avatar ändern",
+                avatar_url: "Avatar-Bild-URL",
+                avatar_hint: "Geben Sie eine URL für Ihr Avatar-Bild ein oder verwenden Sie die unten stehenden Standardoptionen.",
+                default_avatars: "Standard-Avatare",
+                save_avatar: "Avatar speichern",
+                new_password: "Neues Passwort (optional)",
+                save_changes: "Änderungen speichern",
+                
+                all_rights: "Alle Rechte vorbehalten.",
+                footer_home: "Startseite",
+                footer_about: "Über",
+                footer_contact: "Kontakt",
+                footer_privacy: "Datenschutzrichtlinie",
+                
+                windows_notice: "Windows aktivieren. Gehen Sie zu Einstellungen, um Windows zu aktivieren."
+            },
+            zh: {
+                home_title: "中位数分析器",
+                home_subtitle: "一个简单的统计计算器，用于查找一组数字的中位数。",
+                about_title: "关于中位数分析器",
+                about_subtitle: "了解我们的统计计算器及其功能",
+                contact_title: "联系我们",
+                contact_subtitle: "如有问题、反馈或支持，请与我们联系",
+                login_title: "登录您的账户",
+                signup_title: "创建账户",
+                profile_title: "我的个人资料",
+                profile_subtitle: "管理您的账户设置和偏好",
+                
+                calculator_title: "统计计算器",
+                numbers_label: "输入数字（用逗号分隔）",
+                numbers_hint: "示例：5, 10, 15, 20 或 5 10 15 20",
+                calculate_btn: "计算",
+                results_title: "结果",
+                mean_label: "平均值",
+                median_label: "中位数 (Q2)",
+                q1_label: "第一四分位数",
+                q3_label: "第三四分位数",
+                sorted_label: "排序后的数字：",
+                additional_stats: "额外统计信息",
+                mode_label: "众数",
+                range_label: "极差",
+                variance_label: "方差",
+                std_dev_label: "标准差",
+                
+                about_what: "什么是中位数分析器？",
+                about_desc1: "中位数分析器是一个功能强大且简单易用的统计计算器，旨在帮助学生、研究人员和专业人员快速计算任何数据集的关键统计度量。",
+                about_desc2: "我们的工具专注于提供准确的中位数、四分位数、平均值和其他基本统计数据的计算，具有直观的界面和即时结果。",
+                feature1_title: "快速计算",
+                feature1_desc: "使用我们优化的算法，为任何数据集获得即时结果。",
+                feature2_title: "准确结果",
+                feature2_desc: "遵循统计最佳实践和公式的精确计算。",
+                feature3_title: "响应式设计",
+                feature3_desc: "在任何设备上使用我们的工具 - 台式机、平板电脑或手机。",
+                feature4_title: "多种统计",
+                feature4_desc: "从单个输入计算平均值、中位数、四分位数等。",
+                how_to_use: "如何使用",
+                how_to_desc: "使用中位数分析器非常简单：",
+                step1: "在主页的输入字段中输入您的数字",
+                step2: "用逗号、空格或换行符分隔数字",
+                step3: "点击“计算”按钮查看结果",
+                step4: "查看计算出的统计数据和排序后的数字",
+                
+                contact_info: "联系信息",
+                contact_desc: "对中位数分析器有疑问或需要统计咨询？使用以下信息与我们联系。",
+                email_label: "电子邮件",
+                phone_label: "电话",
+                address_label: "地址",
+                hours_label: "营业时间",
+                hours_value: "周一至周五：东部时间上午9点至下午6点",
+                send_message: "发送消息",
+                name_label: "您的姓名",
+                message_label: "您的消息",
+                message_placeholder: "在此输入您的消息...",
+                send_btn: "发送消息",
+                
+                password_label: "密码",
+                remember_me: "记住我",
+                forgot_password: "忘记密码？",
+                no_account: "没有账户？",
+                signup_link: "注册",
+                have_account: "已有账户？",
+                login_link: "登录",
+                login_btn: "登录",
+                full_name: "全名",
+                confirm_password: "确认密码",
+                signup_btn: "创建账户",
+                
+                member_since: "会员自：",
+                edit_profile: "编辑个人资料",
+                appearance_settings: "外观设置",
+                dark_mode: "深色模式",
+                dark_mode_desc: "在深色和浅色主题之间切换",
+                language_pref: "语言偏好",
+                language_desc: "选择您偏好的语言",
+                calculator_settings: "计算器设置",
+                auto_calculate: "自动计算",
+                auto_calculate_desc: "输入更改时自动计算",
+                decimal_places: "小数位数",
+                decimal_places_desc: "显示的小数位数",
+                
+                change_avatar: "更改头像",
+                avatar_url: "头像图片URL",
+                avatar_hint: "输入您的头像图片URL或使用下面的默认选项。",
+                default_avatars: "默认头像",
+                save_avatar: "保存头像",
+                new_password: "新密码（可选）",
+                save_changes: "保存更改",
+                
+                all_rights: "版权所有。",
+                footer_home: "首页",
+                footer_about: "关于",
+                footer_contact: "联系我们",
+                footer_privacy: "隐私政策",
+                
+                windows_notice: "激活 Windows。转到设置以激活 Windows。"
+            }
+        };
+
+        // Initialize the application
         document.addEventListener('DOMContentLoaded', function() {
+            // Load state from localStorage
+            loadStateFromStorage();
+            
+            // Initialize UI based on state
+            initializeUI();
+            
+            // Set up event listeners
+            setupEventListeners();
+            
+            // Calculate initial statistics
+            calculateStatistics();
+            
+            // If user is logged in, update UI
+            if (state.isLoggedIn && state.currentUser) {
+                updateUserUI();
+            }
+        });
+
+        // Load state from localStorage
+        function loadStateFromStorage() {
+            // Load user
+            const savedUser = localStorage.getItem('medianAnalyzerUser');
+            if (savedUser) {
+                state.currentUser = JSON.parse(savedUser);
+                state.isLoggedIn = true;
+            }
+            
+            // Load language
+            const savedLanguage = localStorage.getItem('medianAnalyzerLanguage');
+            if (savedLanguage) {
+                state.language = savedLanguage;
+            }
+            
+            // Load theme
+            const savedTheme = localStorage.getItem('medianAnalyzerTheme');
+            if (savedTheme !== null) {
+                state.darkMode = savedTheme === 'dark';
+            }
+            
+            // Load user settings
+            const savedSettings = localStorage.getItem('medianAnalyzerSettings');
+            if (savedSettings) {
+                state.userSettings = JSON.parse(savedSettings);
+            }
+        }
+
+        // Save state to localStorage
+        function saveStateToStorage() {
+            if (state.currentUser) {
+                localStorage.setItem('medianAnalyzerUser', JSON.stringify(state.currentUser));
+            }
+            localStorage.setItem('medianAnalyzerLanguage', state.language);
+            localStorage.setItem('medianAnalyzerTheme', state.darkMode ? 'dark' : 'light');
+            localStorage.setItem('medianAnalyzerSettings', JSON.stringify(state.userSettings));
+        }
+
+        // Initialize UI based on state
+        function initializeUI() {
+            // Set language
+            updateLanguage(state.language);
+            
+            // Set theme
+            if (state.darkMode) {
+                document.body.classList.remove('light-mode');
+                document.getElementById('themeToggle').innerHTML = '<i class="fas fa-moon"></i>';
+                document.getElementById('darkModeToggle').checked = true;
+            } else {
+                document.body.classList.add('light-mode');
+                document.getElementById('themeToggle').innerHTML = '<i class="fas fa-sun"></i>';
+                document.getElementById('darkModeToggle').checked = false;
+            }
+            
+            // Update language selector
+            const languageBtn = document.getElementById('languageBtn');
+            const languageOptions = {
+                en: 'English',
+                ar: 'العربية',
+                de: 'Deutsch',
+                zh: '中文'
+            };
+            languageBtn.querySelector('span').textContent = languageOptions[state.language];
+            document.getElementById('profileLanguage').value = state.language;
+            
+            // Update user settings
+            document.getElementById('autoCalculateToggle').checked = state.userSettings.autoCalculate;
+            document.getElementById('decimalPlaces').value = state.userSettings.decimalPlaces;
+        }
+
+        // Set up event listeners
+        function setupEventListeners() {
+            // Navigation
             const navLinks = document.querySelectorAll('.nav-link');
             const pages = document.querySelectorAll('.page');
             const mobileMenuBtn = document.getElementById('mobileMenuBtn');
             const navMenu = document.getElementById('navMenu');
             
-            // Navigation click handler
             navLinks.forEach(link => {
                 link.addEventListener('click', function(e) {
                     e.preventDefault();
@@ -835,86 +2160,72 @@
             // Calculator functionality
             const calculateBtn = document.getElementById('calculate-btn');
             const numbersInput = document.getElementById('numbers-input');
-            const meanResult = document.getElementById('mean-result');
-            const medianResult = document.getElementById('median-result');
-            const q1Result = document.getElementById('q1-result');
-            const q3Result = document.getElementById('q3-result');
-            const sortedNumbers = document.getElementById('sorted-numbers');
             
             calculateBtn.addEventListener('click', calculateStatistics);
             
-            // Calculate statistics function
-            function calculateStatistics() {
-                let input = numbersInput.value.trim();
-                
-                // Replace multiple separators with commas
-                input = input.replace(/[,\s]+/g, ',');
-                
-                // Remove trailing commas
-                input = input.replace(/^,|,$/g, '');
-                
-                if (!input) {
-                    alert('Please enter some numbers');
-                    return;
+            // Auto calculate if enabled
+            numbersInput.addEventListener('input', function() {
+                if (state.userSettings.autoCalculate) {
+                    calculateStatistics();
                 }
-                
-                // Convert to array of numbers
-                const numbers = input.split(',').map(num => parseFloat(num.trim())).filter(num => !isNaN(num));
-                
-                if (numbers.length === 0) {
-                    alert('Please enter valid numbers');
-                    return;
-                }
-                
-                // Sort numbers
-                const sorted = [...numbers].sort((a, b) => a - b);
-                
-                // Calculate mean
-                const sum = sorted.reduce((a, b) => a + b, 0);
-                const mean = sum / sorted.length;
-                
-                // Calculate median (Q2)
-                let median;
-                const mid = Math.floor(sorted.length / 2);
-                
-                if (sorted.length % 2 === 0) {
-                    median = (sorted[mid - 1] + sorted[mid]) / 2;
-                } else {
-                    median = sorted[mid];
-                }
-                
-                // Calculate Q1 (median of first half)
-                const firstHalf = sorted.slice(0, mid);
-                let q1;
-                const q1Mid = Math.floor(firstHalf.length / 2);
-                
-                if (firstHalf.length % 2 === 0) {
-                    q1 = (firstHalf[q1Mid - 1] + firstHalf[q1Mid]) / 2;
-                } else {
-                    q1 = firstHalf[q1Mid];
-                }
-                
-                // Calculate Q3 (median of second half)
-                const secondHalfStart = sorted.length % 2 === 0 ? mid : mid + 1;
-                const secondHalf = sorted.slice(secondHalfStart);
-                let q3;
-                const q3Mid = Math.floor(secondHalf.length / 2);
-                
-                if (secondHalf.length % 2 === 0) {
-                    q3 = (secondHalf[q3Mid - 1] + secondHalf[q3Mid]) / 2;
-                } else {
-                    q3 = secondHalf[q3Mid];
-                }
-                
-                // Update UI with results
-                meanResult.textContent = mean.toFixed(2);
-                medianResult.textContent = median;
-                q1Result.textContent = q1;
-                q3Result.textContent = q3;
-                sortedNumbers.textContent = sorted.join(', ');
-            }
+            });
             
-            // Contact form submission
+            // Language selector
+            const languageBtn = document.getElementById('languageBtn');
+            const languageDropdown = document.getElementById('languageDropdown');
+            const languageOptions = document.querySelectorAll('.language-option');
+            
+            languageBtn.addEventListener('click', function(e) {
+                e.stopPropagation();
+                languageDropdown.classList.toggle('show');
+            });
+            
+            languageOptions.forEach(option => {
+                option.addEventListener('click', function() {
+                    const lang = this.getAttribute('data-lang');
+                    updateLanguage(lang);
+                    languageDropdown.classList.remove('show');
+                });
+            });
+            
+            // Close language dropdown when clicking outside
+            document.addEventListener('click', function() {
+                languageDropdown.classList.remove('show');
+            });
+            
+            // Theme toggle
+            const themeToggle = document.getElementById('themeToggle');
+            const darkModeToggle = document.getElementById('darkModeToggle');
+            
+            themeToggle.addEventListener('click', toggleTheme);
+            darkModeToggle.addEventListener('click', toggleTheme);
+            
+            // User menu
+            const userBtn = document.getElementById('userBtn');
+            const userDropdown = document.getElementById('userDropdown');
+            const loginLogoutBtn = document.getElementById('loginLogoutBtn');
+            
+            userBtn.addEventListener('click', function(e) {
+                e.stopPropagation();
+                userDropdown.classList.toggle('show');
+            });
+            
+            loginLogoutBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                if (state.isLoggedIn) {
+                    logout();
+                } else {
+                    navigateToPage('login');
+                }
+                userDropdown.classList.remove('show');
+            });
+            
+            // Close user dropdown when clicking outside
+            document.addEventListener('click', function() {
+                userDropdown.classList.remove('show');
+            });
+            
+            // Contact form
             const contactForm = document.getElementById('contact-form');
             contactForm.addEventListener('submit', function(e) {
                 e.preventDefault();
@@ -924,16 +2235,486 @@
                 const message = document.getElementById('contact-message').value;
                 
                 // In a real application, you would send this data to a server
-                // For this demo, we'll just show an alert
                 alert(`Thank you for your message, ${name}! We'll get back to you at ${email} soon.`);
                 
                 // Reset form
                 contactForm.reset();
             });
             
-            // Initialize with example data
-            calculateStatistics();
-        });
+            // Login form
+            const loginForm = document.getElementById('login-form');
+            loginForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                const email = document.getElementById('login-email').value;
+                const password = document.getElementById('login-password').value;
+                
+                // Simple validation
+                if (!email || !password) {
+                    alert('Please enter both email and password');
+                    return;
+                }
+                
+                // For demo purposes, we'll accept any non-empty password
+                // In a real app, you would verify credentials with a server
+                login(email, password);
+            });
+            
+            // Signup form
+            const signupForm = document.getElementById('signup-form');
+            signupForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                const name = document.getElementById('signup-name').value;
+                const email = document.getElementById('signup-email').value;
+                const password = document.getElementById('signup-password').value;
+                const confirmPassword = document.getElementById('signup-confirm-password').value;
+                
+                // Validation
+                if (!name || !email || !password) {
+                    alert('Please fill in all required fields');
+                    return;
+                }
+                
+                if (password !== confirmPassword) {
+                    alert('Passwords do not match');
+                    return;
+                }
+                
+                // For demo purposes, we'll create a user
+                // In a real app, you would send this data to a server
+                signup(name, email, password);
+            });
+            
+            // Edit profile button
+            const editProfileBtn = document.getElementById('editProfileBtn');
+            editProfileBtn.addEventListener('click', function() {
+                openEditProfileModal();
+            });
+            
+            // Avatar change button
+            const avatarChangeBtn = document.getElementById('avatarChangeBtn');
+            avatarChangeBtn.addEventListener('click', function() {
+                openAvatarModal();
+            });
+            
+            // Avatar modal
+            const avatarModal = document.getElementById('avatarModal');
+            const closeAvatarModal = document.getElementById('closeAvatarModal');
+            const saveAvatarBtn = document.getElementById('saveAvatarBtn');
+            const avatarOptions = document.querySelectorAll('.avatar-option');
+            
+            closeAvatarModal.addEventListener('click', function() {
+                avatarModal.classList.remove('show');
+            });
+            
+            saveAvatarBtn.addEventListener('click', function() {
+                const avatarUrl = document.getElementById('avatarUrl').value;
+                updateAvatar(avatarUrl);
+                avatarModal.classList.remove('show');
+            });
+            
+            avatarOptions.forEach(option => {
+                option.addEventListener('click', function() {
+                    const avatarType = this.getAttribute('data-avatar');
+                    let avatarUrl = '';
+                    
+                    if (avatarType === 'male') {
+                        avatarUrl = 'https://ui-avatars.com/api/?name=John+Doe&background=4a6fa5&color=fff&size=150';
+                    } else if (avatarType === 'female') {
+                        avatarUrl = 'https://ui-avatars.com/api/?name=Jane+Smith&background=e11d48&color=fff&size=150';
+                    } else if (avatarType === 'neutral') {
+                        avatarUrl = 'https://ui-avatars.com/api/?name=Alex+Taylor&background=10b981&color=fff&size=150';
+                    }
+                    
+                    document.getElementById('avatarUrl').value = avatarUrl;
+                });
+            });
+            
+            // Edit profile modal
+            const editProfileModal = document.getElementById('editProfileModal');
+            const closeEditProfileModal = document.getElementById('closeEditProfileModal');
+            const editProfileForm = document.getElementById('edit-profile-form');
+            
+            closeEditProfileModal.addEventListener('click', function() {
+                editProfileModal.classList.remove('show');
+            });
+            
+            editProfileForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                const name = document.getElementById('edit-name').value;
+                const email = document.getElementById('edit-email').value;
+                const password = document.getElementById('edit-password').value;
+                const confirmPassword = document.getElementById('edit-confirm-password').value;
+                
+                // Validation
+                if (!name || !email) {
+                    alert('Please fill in all required fields');
+                    return;
+                }
+                
+                if (password && password !== confirmPassword) {
+                    alert('Passwords do not match');
+                    return;
+                }
+                
+                updateProfile(name, email, password);
+                editProfileModal.classList.remove('show');
+            });
+            
+            // User settings
+            const autoCalculateToggle = document.getElementById('autoCalculateToggle');
+            const decimalPlacesSelect = document.getElementById('decimalPlaces');
+            const profileLanguageSelect = document.getElementById('profileLanguage');
+            
+            autoCalculateToggle.addEventListener('change', function() {
+                state.userSettings.autoCalculate = this.checked;
+                saveStateToStorage();
+            });
+            
+            decimalPlacesSelect.addEventListener('change', function() {
+                state.userSettings.decimalPlaces = parseInt(this.value);
+                saveStateToStorage();
+                calculateStatistics(); // Recalculate with new decimal places
+            });
+            
+            profileLanguageSelect.addEventListener('change', function() {
+                updateLanguage(this.value);
+            });
+            
+            // Close modals when clicking outside
+            window.addEventListener('click', function(e) {
+                if (e.target === avatarModal) {
+                    avatarModal.classList.remove('show');
+                }
+                if (e.target === editProfileModal) {
+                    editProfileModal.classList.remove('show');
+                }
+            });
+        }
+
+        // Navigate to a specific page
+        function navigateToPage(pageId) {
+            // Update active nav link
+            const navLinks = document.querySelectorAll('.nav-link');
+            const pages = document.querySelectorAll('.page');
+            
+            navLinks.forEach(link => link.classList.remove('active'));
+            pages.forEach(page => page.classList.remove('active'));
+            
+            // Activate the target page
+            document.getElementById(`${pageId}-page`).classList.add('active');
+            
+            // Find and activate the corresponding nav link
+            const targetLink = document.querySelector(`.nav-link[data-page="${pageId}"]`);
+            if (targetLink) {
+                targetLink.classList.add('active');
+            }
+        }
+
+        // Update language
+        function updateLanguage(lang) {
+            state.language = lang;
+            
+            // Update UI text
+            const elements = document.querySelectorAll('[data-translate]');
+            elements.forEach(element => {
+                const key = element.getAttribute('data-translate');
+                if (translations[lang] && translations[lang][key]) {
+                    if (element.tagName === 'INPUT' || element.tagName === 'TEXTAREA') {
+                        element.placeholder = translations[lang][key];
+                    } else {
+                        element.textContent = translations[lang][key];
+                    }
+                }
+            });
+            
+            // Update language button
+            const languageOptions = {
+                en: 'English',
+                ar: 'العربية',
+                de: 'Deutsch',
+                zh: '中文'
+            };
+            document.getElementById('languageBtn').querySelector('span').textContent = languageOptions[lang];
+            document.getElementById('profileLanguage').value = lang;
+            
+            // Update RTL for Arabic
+            if (lang === 'ar') {
+                document.getElementById('htmlElement').setAttribute('dir', 'rtl');
+            } else {
+                document.getElementById('htmlElement').setAttribute('dir', 'ltr');
+            }
+            
+            // Save to storage
+            saveStateToStorage();
+        }
+
+        // Toggle theme
+        function toggleTheme() {
+            state.darkMode = !state.darkMode;
+            
+            if (state.darkMode) {
+                document.body.classList.remove('light-mode');
+                document.getElementById('themeToggle').innerHTML = '<i class="fas fa-moon"></i>';
+                document.getElementById('darkModeToggle').checked = true;
+            } else {
+                document.body.classList.add('light-mode');
+                document.getElementById('themeToggle').innerHTML = '<i class="fas fa-sun"></i>';
+                document.getElementById('darkModeToggle').checked = false;
+            }
+            
+            // Save to storage
+            saveStateToStorage();
+        }
+
+        // Login function
+        function login(email, password) {
+            // For demo purposes, create a user if none exists
+            // In a real app, you would verify with a server
+            if (!state.currentUser) {
+                // Create a demo user
+                state.currentUser = {
+                    name: "Demo User",
+                    email: email,
+                    avatar: "https://ui-avatars.com/api/?name=Demo+User&background=4a6fa5&color=fff&size=150",
+                    memberSince: new Date().toLocaleDateString()
+                };
+            }
+            
+            state.isLoggedIn = true;
+            saveStateToStorage();
+            updateUserUI();
+            navigateToPage('home');
+            
+            alert('Login successful!');
+        }
+
+        // Signup function
+        function signup(name, email, password) {
+            // Create new user
+            state.currentUser = {
+                name: name,
+                email: email,
+                avatar: `https://ui-avatars.com/api/?name=${encodeURIComponent(name)}&background=4a6fa5&color=fff&size=150`,
+                memberSince: new Date().toLocaleDateString()
+            };
+            
+            state.isLoggedIn = true;
+            saveStateToStorage();
+            updateUserUI();
+            navigateToPage('home');
+            
+            alert('Account created successfully!');
+        }
+
+        // Logout function
+        function logout() {
+            state.isLoggedIn = false;
+            state.currentUser = null;
+            saveStateToStorage();
+            updateUserUI();
+            navigateToPage('home');
+            
+            alert('Logged out successfully!');
+        }
+
+        // Update user UI
+        function updateUserUI() {
+            const userName = document.getElementById('userName');
+            const loginLogoutBtn = document.getElementById('loginLogoutBtn');
+            const profileName = document.getElementById('profileName');
+            const profileEmail = document.getElementById('profileEmail');
+            const memberSince = document.getElementById('memberSince');
+            const avatarImg = document.getElementById('avatarImg');
+            
+            if (state.isLoggedIn && state.currentUser) {
+                userName.textContent = state.currentUser.name.split(' ')[0]; // First name only
+                loginLogoutBtn.innerHTML = '<i class="fas fa-sign-out-alt"></i><span>Logout</span>';
+                loginLogoutBtn.querySelector('span').textContent = translations[state.language].logout || 'Logout';
+                
+                // Update profile page
+                profileName.textContent = state.currentUser.name;
+                profileEmail.textContent = state.currentUser.email;
+                memberSince.textContent = state.currentUser.memberSince;
+                avatarImg.src = state.currentUser.avatar;
+            } else {
+                userName.textContent = 'Guest';
+                loginLogoutBtn.innerHTML = '<i class="fas fa-sign-in-alt"></i><span>Login</span>';
+                loginLogoutBtn.querySelector('span').textContent = translations[state.language].login_btn || 'Login';
+                
+                // Update profile page with guest data
+                profileName.textContent = 'Guest User';
+                profileEmail.textContent = 'guest@example.com';
+                memberSince.textContent = 'Today';
+                avatarImg.src = 'https://ui-avatars.com/api/?name=Guest+User&background=4a6fa5&color=fff&size=150';
+            }
+        }
+
+        // Open avatar modal
+        function openAvatarModal() {
+            if (!state.isLoggedIn) {
+                alert('Please login to change your avatar');
+                navigateToPage('login');
+                return;
+            }
+            
+            document.getElementById('avatarModal').classList.add('show');
+        }
+
+        // Update avatar
+        function updateAvatar(avatarUrl) {
+            if (!state.isLoggedIn || !state.currentUser) return;
+            
+            if (avatarUrl) {
+                state.currentUser.avatar = avatarUrl;
+            } else {
+                // Use default based on name
+                const name = state.currentUser.name;
+                state.currentUser.avatar = `https://ui-avatars.com/api/?name=${encodeURIComponent(name)}&background=4a6fa5&color=fff&size=150`;
+            }
+            
+            saveStateToStorage();
+            updateUserUI();
+            
+            alert('Avatar updated successfully!');
+        }
+
+        // Open edit profile modal
+        function openEditProfileModal() {
+            if (!state.isLoggedIn) {
+                alert('Please login to edit your profile');
+                navigateToPage('login');
+                return;
+            }
+            
+            document.getElementById('edit-name').value = state.currentUser.name;
+            document.getElementById('edit-email').value = state.currentUser.email;
+            document.getElementById('edit-password').value = '';
+            document.getElementById('edit-confirm-password').value = '';
+            
+            document.getElementById('editProfileModal').classList.add('show');
+        }
+
+        // Update profile
+        function updateProfile(name, email, password) {
+            if (!state.isLoggedIn || !state.currentUser) return;
+            
+            state.currentUser.name = name;
+            state.currentUser.email = email;
+            
+            // Update avatar URL with new name
+            state.currentUser.avatar = `https://ui-avatars.com/api/?name=${encodeURIComponent(name)}&background=4a6fa5&color=fff&size=150`;
+            
+            saveStateToStorage();
+            updateUserUI();
+            
+            alert('Profile updated successfully!');
+        }
+
+        // Calculate statistics
+        function calculateStatistics() {
+            let input = document.getElementById('numbers-input').value.trim();
+            
+            // Replace multiple separators with commas
+            input = input.replace(/[,\s]+/g, ',');
+            
+            // Remove trailing commas
+            input = input.replace(/^,|,$/g, '');
+            
+            if (!input) {
+                alert('Please enter some numbers');
+                return;
+            }
+            
+            // Convert to array of numbers
+            const numbers = input.split(',').map(num => parseFloat(num.trim())).filter(num => !isNaN(num));
+            
+            if (numbers.length === 0) {
+                alert('Please enter valid numbers');
+                return;
+            }
+            
+            // Sort numbers
+            const sorted = [...numbers].sort((a, b) => a - b);
+            
+            // Calculate mean
+            const sum = sorted.reduce((a, b) => a + b, 0);
+            const mean = sum / sorted.length;
+            
+            // Calculate median (Q2)
+            let median;
+            const mid = Math.floor(sorted.length / 2);
+            
+            if (sorted.length % 2 === 0) {
+                median = (sorted[mid - 1] + sorted[mid]) / 2;
+            } else {
+                median = sorted[mid];
+            }
+            
+            // Calculate Q1 (median of first half)
+            const firstHalf = sorted.slice(0, mid);
+            let q1;
+            const q1Mid = Math.floor(firstHalf.length / 2);
+            
+            if (firstHalf.length % 2 === 0) {
+                q1 = (firstHalf[q1Mid - 1] + firstHalf[q1Mid]) / 2;
+            } else {
+                q1 = firstHalf[q1Mid];
+            }
+            
+            // Calculate Q3 (median of second half)
+            const secondHalfStart = sorted.length % 2 === 0 ? mid : mid + 1;
+            const secondHalf = sorted.slice(secondHalfStart);
+            let q3;
+            const q3Mid = Math.floor(secondHalf.length / 2);
+            
+            if (secondHalf.length % 2 === 0) {
+                q3 = (secondHalf[q3Mid - 1] + secondHalf[q3Mid]) / 2;
+            } else {
+                q3 = secondHalf[q3Mid];
+            }
+            
+            // Calculate mode
+            const frequency = {};
+            let maxFreq = 0;
+            let mode = [];
+            
+            sorted.forEach(num => {
+                frequency[num] = (frequency[num] || 0) + 1;
+                if (frequency[num] > maxFreq) {
+                    maxFreq = frequency[num];
+                    mode = [num];
+                } else if (frequency[num] === maxFreq && !mode.includes(num)) {
+                    mode.push(num);
+                }
+            });
+            
+            // Calculate range
+            const range = sorted[sorted.length - 1] - sorted[0];
+            
+            // Calculate variance
+            const squaredDifferences = sorted.map(num => Math.pow(num - mean, 2));
+            const variance = squaredDifferences.reduce((a, b) => a + b, 0) / sorted.length;
+            
+            // Calculate standard deviation
+            const stdDev = Math.sqrt(variance);
+            
+            // Get decimal places from settings
+            const decimalPlaces = state.userSettings.decimalPlaces || 2;
+            
+            // Update UI with results
+            document.getElementById('mean-result').textContent = mean.toFixed(decimalPlaces);
+            document.getElementById('median-result').textContent = median.toFixed(decimalPlaces);
+            document.getElementById('q1-result').textContent = q1.toFixed(decimalPlaces);
+            document.getElementById('q3-result').textContent = q3.toFixed(decimalPlaces);
+            document.getElementById('mode-result').textContent = mode.length === sorted.length ? 'No mode' : mode.join(', ');
+            document.getElementById('range-result').textContent = range.toFixed(decimalPlaces);
+            document.getElementById('variance-result').textContent = variance.toFixed(decimalPlaces);
+            document.getElementById('std-dev-result').textContent = stdDev.toFixed(decimalPlaces);
+            document.getElementById('sorted-numbers').textContent = sorted.join(', ');
+        }
     </script>
 </body>
 </html>
